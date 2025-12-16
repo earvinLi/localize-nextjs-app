@@ -1,4 +1,4 @@
-This is an example showcasing how to localize a 'Next.js' app with 'i18next'.
+This is an example repo showcasing how to localize a 'Next.js' app with 'i18next'.
 
 ## Getting start
 
