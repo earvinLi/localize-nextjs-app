@@ -18,8 +18,10 @@
         "name": "next"
       }
     ],
+    "baseUrl": "app/",
     "paths": {
-      "@/*": ["./*"]
+      "@/components/*": ["_components/*"],
+      "@/utils/*": ["_utils/*"],
     }
   },
   "include": [
