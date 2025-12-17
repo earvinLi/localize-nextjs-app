@@ -41,7 +41,6 @@ export default function LanguageChanger(props: LanguageChangerProps) {
     const expireDate = currentDate.toUTCString();
     document.cookie = `${cookieName}=${newLocale};expires=${expireDate};path=/`;
 
-    // Todo: is it better to create 'zodClient' and change its locale there according to 'useT' hook?
     // change 'zod' locale
     z.config(zodLocales[newLocale as keyof typeof zodLocales]);
 

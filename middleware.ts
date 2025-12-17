@@ -10,7 +10,6 @@ import { defaultLocale, appLocales, cookieName, headerName } from '@/utils/i18nU
 acceptLanguage.languages(appLocales);
 
 export const config = {
-  // Todo: should load localized images if possible
   /*
     avoid matching for:
     - api (API routes)
@@ -53,7 +52,6 @@ export function middleware(req: NextRequest) {
   headers.set(headerName, pathLocale);
   return NextResponse.next({ headers });
 
-  // Todo: whether to add this 'referer' back?
   /*
    // if a referer exists, try to detect locale from there and set the cookie accordingly
    if (req.headers.has('referer')) {

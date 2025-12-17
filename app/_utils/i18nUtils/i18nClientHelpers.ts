@@ -1,10 +1,10 @@
 'use client';
 
 // External Dependencies
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { useTranslation, UseTranslationOptions, FallbackNs } from 'react-i18next';
-import { FlatNamespace, KeyPrefix } from 'i18next';
+import { Namespace, KeyPrefix } from 'i18next';
+import { useTranslation, UseTranslationOptions } from 'react-i18next';
 
 // Local Dependencies
 import i18next from './i18nextInstance';
@@ -12,14 +12,14 @@ import i18next from './i18nextInstance';
 // Local Variables
 const runsOnServerSide = typeof window === 'undefined';
 
-export function useT<
-  Ns extends FlatNamespace,
-  KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined,
->(namespace?: Ns, options?: UseTranslationOptions<KPrefix>) {
-  const paramsLocale = useParams()?.locale;
+export function useT(
+  namespace: string | string[],
+  options?: UseTranslationOptions<KeyPrefix<Namespace>>,
+) {
+  const paramsLocale = useParams().locale;
 
   if (typeof paramsLocale !== 'string') {
-    throw new Error('useT is only available inside /app/(routes)/[locale]');
+    throw new Error("'useT' is only available inside '/app/(routes)/[locale]'");
   }
 
   const [activeLocale, setActiveLocale] = useState(i18next.resolvedLanguage);
@@ -29,7 +29,7 @@ export function useT<
       void i18next.changeLanguage(paramsLocale);
     } else {
       if (activeLocale === i18next.resolvedLanguage) return;
-      setActiveLocale(i18next.resolvedLanguage);
+      setActiveLocale(i18next.resolvedLanguage); // eslint-disable-line react-hooks/set-state-in-effect
     }
   }, [paramsLocale, activeLocale]);
 
@@ -43,8 +43,5 @@ export function useT<
   }, [paramsLocale]);
 
   const { t, i18n } = useTranslation(namespace, options);
-  return {
-    t,
-    resolvedLanguage: i18n.resolvedLanguage,
-  };
+  return { t, resolvedLanguage: i18n.resolvedLanguage };
 }

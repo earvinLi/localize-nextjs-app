@@ -10,7 +10,7 @@ import { defaultLocale, appLocales, defaultNamespace } from './i18nConfig';
 // Local Variables
 const runsOnServerSide = typeof window === 'undefined';
 
-i18next // eslint-disable-line @typescript-eslint/no-floating-promises
+void i18next
   .use(initReactI18next)
   .use(LanguageDetector)
   .use(

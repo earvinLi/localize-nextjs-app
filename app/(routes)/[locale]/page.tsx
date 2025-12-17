@@ -7,7 +7,8 @@ import LanguageChanger from '@/components/LanguageChanger';
 import { getT } from '@/utils/i18nUtils/i18nServerHelpers';
 
 // Local Variables
-const tutorialArticalLink = 'https://i-earvin.vercel.app/en-US/posts/how-to-localize-a-nextjs-app';
+const portfolioPageLink = 'https://i-earvin.vercel.app';
+const tutorialArticleLink = 'https://i-earvin.vercel.app/en-US/posts/how-to-localize-a-nextjs-app';
 
 // Component Definition
 export default async function Home() {
@@ -24,10 +25,20 @@ export default async function Home() {
           {t('home_description')}
         </div>
         <Link
-          href={tutorialArticalLink}
+          href={tutorialArticleLink}
           target='_blank'
         >
           <Button variant='outlined'>{t('home_check_tutorial_button_text')}</Button>
+        </Link>
+      </div>
+      <div className='fixed bottom-3 text-gray-500 italic'>
+        Coded with 🐈 by&nbsp;
+        <Link
+          href={portfolioPageLink}
+          target='_blank'
+          className='text-[#03A9F4] underline'
+        >
+          Earvin
         </Link>
       </div>
     </div>

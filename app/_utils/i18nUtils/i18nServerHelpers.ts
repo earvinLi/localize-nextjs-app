@@ -1,22 +1,12 @@
 // External Dependencies
 import { headers } from 'next/headers';
-import { Namespace, FlatNamespace, KeyPrefix } from 'i18next';
-import { FallbackNs } from 'react-i18next';
-
-// Type Definitions
-type $Tuple<T> = readonly [T?, ...T[]];
-type $FirstNamespace<Ns extends Namespace> = Ns extends readonly never[] ? Ns[0] : Ns;
+import { Namespace, KeyPrefix } from 'i18next';
 
 // Local Dependencies
 import i18next from './i18nextInstance';
 import { headerName } from './i18nConfig';
 
-export async function getT<
-  Ns extends FlatNamespace | $Tuple<FlatNamespace>,
-  KPrefix extends KeyPrefix<
-    FallbackNs<Ns extends FlatNamespace ? FlatNamespace : $FirstNamespace<FlatNamespace>>
-  > = undefined,
->(namespace?: Ns, options: { keyPrefix?: KPrefix } = {}) {
+export async function getT(namespace: string | string[], options?: KeyPrefix<Namespace>) {
   const headerList = await headers();
   const headerLocale = headerList.get(headerName);
 
@@ -24,12 +14,13 @@ export async function getT<
     await i18next.changeLanguage(headerLocale);
   }
 
-  if (namespace && !i18next.hasLoadedNamespace(namespace as string | string[])) {
-    await i18next.loadNamespaces(namespace as string | string[]);
+  if (namespace && !i18next.hasLoadedNamespace(namespace)) {
+    await i18next.loadNamespaces(namespace);
   }
 
   return {
-    t: i18next.getFixedT(headerLocale, namespace as string | string[], options.keyPrefix),
+    // 'getFixedT' defaults 't' to header locale and the given namespace
+    t: i18next.getFixedT(headerLocale, namespace, options),
     resolvedLanguage: i18next.resolvedLanguage,
   };
 }
